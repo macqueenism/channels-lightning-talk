@@ -1,0 +1,107 @@
+Introduction to Channels
+Exploring Zipf's Law
+
+28 March 2017
+
+Alec MacQueen
+Software Engineer, Administrate 
+@macqueenism
+
+* Concurrency and Parallelism 
+
+* In short:
+In programming, concurrency is the composition of independently executing processes, while parallelism is the simultaneous execution of (possibly related) computations. 
+
+Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once.
+
+_Andrew_Gerrand_
+
+* 
+.image c_v_p.png 
+.link https://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1 source
+
+* How does Go manage concurrency? 
+
+* Goroutines
+
+- These are not threads. 
+
+* Goroutines
+
+- These are not threads. 
+- They run in the same memory space.  
+
+* Goroutines
+
+- These are not threads. 
+- They run in the same memory space.  
+- They are much cheaper (you can easily have thousands running at the same time).
+
+* Goroutines
+
+- These are not threads. 
+- They run in the same memory space.  
+- They are much cheaper (you can easily have thousands running at the same time).
+- They _could_ be parallel.
+
+* Goroutines
+
+- These are not threads. 
+- They run in the same memory space.  
+- They are much cheaper (you can easily have thousands running at the same time).
+- They _could_ be parallel.
+- They are definitely Concurrent 
+
+* Goroutines
+
+- These are not threads. 
+- They run in the same memory space.  
+- They are much cheaper (you can easily have thousands running at the same time).
+- They _could_ be parallel.
+- They are definitely Concurrent 
+
+The idea is that you don't have to worry about thread management, Golang handles it all for you. 
+
+* Channels
+
+* Do not communicate by sharing memory; instead, share memory by communicating. 
+ 
+* Do not communicate by sharing memory
+
+- In other languages you might use locks, wait groups or atomic values to syncronise your processes.
+- This is threads communicating by sharing memory: the threads have to check the lock to make sure they can proceed 
+
+* Share memory by communicating
+
+- Goroutines can talk to each other
+- They can pass the data they are processing from one goroutine to the next
+- To do this we can use channels
+
+* Syntax
+
+- Create a channel with:
+    channel := make(chan <type>)
+- Send data to a channel 
+    channel <- data
+- Recieve a value off a channel with 
+    result <- channel
+- Range over all the values in a channel 
+    for result := range channel {
+        fmt.PrintLn(result)
+    }
+
+* Example: No channels
+
+.code -edit no_channels.go /START OMIT/,/END OMIT/
+
+* Same Example: Channels
+
+.code -edit channels.go /START OMIT/,/END OMIT/
+
+* Fun facts
+
+- Unbuffered channels block
+- So remember to take values off them to proceed 
+- Also remember to close them
+- Go will remember and will shout at you: 
+    fatal error: all goroutines are asleep - deadlock!
