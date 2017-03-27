@@ -13,8 +13,8 @@ func main() {
 }
 
 func getCleanedWords(line string) chan string {
-	wordChan := make(chan string)
-	go func() { // HL
+	wordChan := make(chan string) // HL
+	go func() {                   // HL
 		for _, word := range cleanWords(line) { // HL
 			wordChan <- word // HL
 		} // HL

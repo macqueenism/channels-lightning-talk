@@ -50,7 +50,7 @@ _Andrew_Gerrand_
 - They run in the same memory space.  
 - They are much cheaper (you can easily have thousands running at the same time).
 - They _could_ be parallel.
-- They are definitely Concurrent 
+- They are definitely concurrent. 
 
 * Goroutines
 
@@ -58,24 +58,35 @@ _Andrew_Gerrand_
 - They run in the same memory space.  
 - They are much cheaper (you can easily have thousands running at the same time).
 - They _could_ be parallel.
-- They are definitely Concurrent 
+- They are definitely concurrent. 
+- You don't have to worry about thread management, Golang handles it all for you. 
 
-The idea is that you don't have to worry about thread management, Golang handles it all for you. 
+* Goroutines
+
+- These are not threads. 
+- They run in the same memory space.  
+- They are much cheaper (you can easily have thousands running at the same time).
+- They _could_ be parallel.
+- They are definitely concurrent. 
+- You don't have to worry about thread management, Golang handles it all for you. 
+- The syntax is: 
+   go yourGreatFunction() 
 
 * Channels
 
-* Do not communicate by sharing memory; instead, share memory by communicating. 
+* "Do not communicate by sharing memory; instead, share memory by communicating." 
  
-* Do not communicate by sharing memory
+* Communicating by sharing memory
 
-- In other languages you might use locks, wait groups or atomic values to syncronise your processes.
-- This is threads communicating by sharing memory: the threads have to check the lock to make sure they can proceed 
+- You might use locks to syncronise your processes.
+- The threads have to check the lock to make sure they can proceed 
+- You can use locks, mutexes, wait groups and atomic values in Go   
 
-* Share memory by communicating
+* Sharing memory by communicating
 
 - Goroutines can talk to each other
 - They can pass the data they are processing from one goroutine to the next
-- To do this we can use channels
+- How do we do this? Channels! 
 
 * Syntax
 
@@ -85,10 +96,20 @@ The idea is that you don't have to worry about thread management, Golang handles
     channel <- data
 - Recieve a value off a channel with 
     result <- channel
+
+* Moar Syntax
+
 - Range over all the values in a channel 
+
     for result := range channel {
-        fmt.PrintLn(result)
+        fmt.Println(result)
     }
+- If you know the number of values you're expecting
+    go func(){
+        for i := 0; i < len(values); i++ {
+            fmt.Println(<-channel)
+        }
+    }()
 
 * Example: No channels
 
@@ -105,3 +126,19 @@ The idea is that you don't have to worry about thread management, Golang handles
 - Also remember to close them
 - Go will remember and will shout at you: 
     fatal error: all goroutines are asleep - deadlock!
+
+* What's Zipf?
+
+* Zipf's Law
+
+A pattern of distribution in certain data sets, notably words in a linguistic corpus, by which the frequency of an item is inversely proportional to its ranking by frequency.
+
+* Or
+
+Given a whole bunch of words, a word should appear at a rate of 1/(rank in frequency).
+
+* Channels resources
+
+- Rob Pike's talk on concurrency
+- Some blog 
+- Todd Mcleod's Golang Tutorials on youtube/udemy 
